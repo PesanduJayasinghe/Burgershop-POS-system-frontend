@@ -1,0 +1,37 @@
+<div class="page-content">
+  <div class="beverages-scroll-container">
+    @for (beverage of beverages; track beverage.title) {
+      <div class="beverage-card">
+        
+        <!-- Image -->
+        <img [src]="beverage.image" [alt]="beverage.title" />
+        
+        <!-- Card Content -->
+        <div class="card-body">
+          <h5>{{ beverage.title }}</h5>
+          
+          <div class="price-badge">
+            {{ beverage.price }}
+          </div>
+          
+          <!-- Quantity Controls -->
+          <div class="quantity-controls">
+            <button (click)="decreaseQuantity(beverage)" [disabled]="beverage.quantity === 0">
+              -
+            </button>
+            <span>{{ beverage.quantity }}</span>
+            <button (click)="increaseQuantity(beverage)">
+              +
+            </button>
+          </div>
+          
+          <!-- Add to Cart Button -->
+          <button (click)="addToCart(beverage)" class="add-to-cart-btn">
+            Add to Cart
+          </button>
+        </div>
+        
+      </div>
+    }
+  </div>
+</div>
