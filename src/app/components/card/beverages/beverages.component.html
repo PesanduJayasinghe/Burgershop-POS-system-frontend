@@ -1,20 +1,20 @@
+<!-- From Uiverse.io by SachinKumar666 --> 
 <div class="page-content">
-  <div class="beverages-scroll-container">
-    @for (beverage of beverages; track beverage.title) {
-      <div class="beverage-card">
-        
-        <!-- Image -->
-        <img [src]="beverage.image" [alt]="beverage.title" />
-        
-        <!-- Card Content -->
-        <div class="card-body">
-          <h5>{{ beverage.title }}</h5>
-          
-          <div class="price-badge">
-            {{ beverage.price }}
-          </div>
-          
-          <!-- Quantity Controls -->
+   <div class="beverages-scroll-container ">
+  @for (beverage of beverages; track beverage.title) {
+<div class="card">
+  <div class="card__shine"></div>
+  <div class="card__glow"></div>
+  <div class="card__content">
+   
+    <div class="card__badge">NEW</div>
+    <div style="" class="burger-image"> <img [src]="beverage.image" [alt]="beverage.title" /></div>
+    <div class="card__text">
+      <p class="card__title">{{ beverage.title }}</p>
+    </div>
+
+    
+       <!-- Quantity Controls -->
           <div class="quantity-controls">
             <button (click)="decreaseQuantity(beverage)" [disabled]="beverage.quantity === 0">
               -
@@ -24,14 +24,28 @@
               +
             </button>
           </div>
-          
-          <!-- Add to Cart Button -->
-          <button (click)="addToCart(beverage)" class="add-to-cart-btn">
-            Add to Cart
-          </button>
-        </div>
-        
+
+
+    <div class="card__footer">
+      <div class="card__price">{{ beverage.price }}</div>
+
+
+      <button (click)="addToCart(beverage)"  >
+      <div class="card__button">
+        <svg height="16" width="16" viewBox="0 0 24 24" >
+          <path 
+            stroke-width="2"
+            stroke="currentColor"
+            d="M4 12H20M12 4V20"
+            fill="currentColor"
+          ></path>
+        </svg>
       </div>
-    }
+      </button>
+    </div>
+  
   </div>
+</div>
+}
+</div>
 </div>
