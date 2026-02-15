@@ -1,19 +1,25 @@
-<div class="main grid grid-cols-12">
-  <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1">
-    <app-side-bar></app-side-bar>
+<div class="main">
+  <!-- Navbar at the very top - full width -->
+  <div class="navbar-full">
+    <app-nav-bar></app-nav-bar>
   </div>
 
-  <div class="grid grid-cols-8 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-8">
-    <app-nav-bar></app-nav-bar>
-    <!-- Main content area -->
-    <div class="dashboard-container sm:grid-cols-12">
+  <!-- Content below navbar - Sidebar + Dashboard -->
+  <div class="content-row">
+    <!-- Sidebar - Always visible, fixed width -->
+    <div class="sidebar-fixed">
+      <app-side-bar></app-side-bar>
+    </div>
+
+    <!-- Dashboard Container - Takes remaining space -->
+    <div class="dashboard-container">
       <!-- Left side: Menu items (router outlet) -->
       <div class="menu-section">
         <router-outlet></router-outlet>
       </div>
 
-      <!-- Right side: Order summary (fixed) -->
-      <div class="order-section grid grid-cols-3  lg:grid-cols-3">
+      <!-- Right side: Order summary -->
+      <div class="order-section">
         <app-order-summary></app-order-summary>
       </div>
     </div>
