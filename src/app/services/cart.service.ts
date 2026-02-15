@@ -8,6 +8,7 @@ export interface CartItem {
   quantity: number;
   total: number;
   category?: string;
+  image?:string;
 }
 
 export interface OrderSummary {
@@ -20,7 +21,9 @@ export interface OrderSummary {
 @Injectable({
   providedIn: 'root'
 })
+
 export class CartService {
+  
   private orderItemsSubject = new BehaviorSubject<CartItem[]>([]);
   orderItems$ = this.orderItemsSubject.asObservable();
   
@@ -36,26 +39,18 @@ export class CartService {
 
   // Add item to cart
   // In cart.service.ts - update addItem method
-addItem(item: { name: string; price: number; category?: string; quantity?: number }) {
-  console.log('=== CART SERVICE ===');
-  console.log('Adding item:', item);
+addItem(item: { name: string; price: number; category?: string; quantity?: number ; image?: string}) {
   
   const quantity = item.quantity || 1; // Default to 1 if not specified
   const validPrice = Number(item.price) || 0;
-  
-  console.log(`Quantity: ${quantity}, Price: ${validPrice}`);
-  
   const currentItems = this.orderItemsSubject.value;
   const existingItemIndex = currentItems.findIndex(i => i.name === item.name);
   
   if (existingItemIndex > -1) {
-    // Update existing item
     const updatedItems = [...currentItems];
     updatedItems[existingItemIndex].quantity += quantity;
     updatedItems[existingItemIndex].total = 
       validPrice * updatedItems[existingItemIndex].quantity;
-    
-    console.log(`Updated existing item: ${item.name}, new quantity: ${updatedItems[existingItemIndex].quantity}`);
     
     this.orderItemsSubject.next(updatedItems);
   } else {
@@ -65,10 +60,9 @@ addItem(item: { name: string; price: number; category?: string; quantity?: numbe
       price: validPrice,
       quantity: quantity,
       total: validPrice * quantity,
-      category: item.category
+      category: item.category,
+      image : item.image
     };
-    
-    console.log(`Added new item:`, newItem);
     this.orderItemsSubject.next([...currentItems, newItem]);
   }
   
