@@ -5,7 +5,7 @@
 .burgers-scroll-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
-  gap: 20px;
+  gap: 9px;
 
   
 }
@@ -25,7 +25,7 @@
 
 @media (max-width: 600px) {
   .burgers-scroll-container {
-    grid-template-columns: 1fr; /* 1 card on mobile */
+    grid-template-columns: repeat(2, 1fr); /* 1 card on mobile */
   }
 }
 
