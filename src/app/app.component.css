@@ -1,0 +1,9 @@
+/* Add this to your global styles.css or to the parent component's CSS */
+app-time {
+    position: fixed;
+    top: 10px;  /* Distance from top */
+    right: 20px; /* Distance from right */
+    z-index: 9999
+    
+}
+
