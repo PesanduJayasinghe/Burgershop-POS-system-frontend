@@ -1,5 +1,5 @@
 export interface Beverage{
-    // id : number;
+    id : number;
     title : string;
     image : string;
     price : string;
