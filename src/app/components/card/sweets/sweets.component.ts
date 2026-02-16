@@ -51,6 +51,18 @@ export class SweetsComponent implements OnInit {
     return 0; // Default to 0 if no number found
   }
 
+  increaseQuantity(sweet: any) {
+    sweet.quantity = (sweet.quantity || 0) + 1;
+    console.log(`Increased ${sweet.title} quantity to: ${sweet.quantity}`);
+  }
+
+  decreaseQuantity(sweet: any) {
+    if (sweet.quantity > 0) {
+      sweet.quantity--;
+      console.log(`Decreased ${sweet.title} quantity to: ${sweet.quantity}`);
+    }
+  }
+
   addToCart(sweet: any) {
     
     if (sweet.quantity > 0) {
