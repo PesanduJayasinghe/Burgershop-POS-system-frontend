@@ -64,19 +64,6 @@ export class CalendarComponent {
     }
   }
 
-  // Close calendar when clicking outside
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent): void {
-    if (this.inputWrapper && this.calendar) {
-      const clickedInside = this.inputWrapper.nativeElement.contains(event.target) || 
-                           this.calendar.nativeElement.contains(event.target);
-      
-      if (!clickedInside) {
-        this.isCalendarOpen = false;
-      }
-    }
-  }
-
   // Previous month
   previousMonth(): void {
     if (this.currentMonth === 0) {
