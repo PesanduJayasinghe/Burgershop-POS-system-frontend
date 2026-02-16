@@ -105,7 +105,7 @@ export class CalendarComponent {
     this.isCalendarOpen = false;
   }
 
-  // Check if a day is today
+  // Check if day is today
   isToday(day: number): boolean {
     const today = new Date();
     return day === today.getDate() && 
