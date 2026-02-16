@@ -19,4 +19,20 @@ export class StatsService {
 
   constructor(private http: HttpClient) { }
 
+  getTodayRevenue():Observable<Number>{
+      return this.http.get<number>(this.todayRevenueURL);
+  }
+
+  getCustomer():Observable<Number>{
+      return this.http.get<number>(this.todayCustomerURL);
+  }
+
+  getweeklyRevenue():Observable<RevenueTrend[]>{
+      return this.http.get<RevenueTrend[]>(this.weeklyRevenue);
+  }
+
+  getTopProducts():Observable<TopProducts[]>{
+      return this.http.get<TopProducts[]>(this.topProducts);
+  }
+
 }
