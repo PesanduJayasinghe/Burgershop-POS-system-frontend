@@ -30,7 +30,7 @@ export class SweetsComponent implements OnInit {
           }
 
           // Extract numeric price from price string
-          // sweet.priceValue = this.extractPriceFromString(sweet.price);
+          sweet.priceValue = this.extractPriceFromString(sweet.price);
 
           console.log(`Sweet: ${sweet.title}, Price string: ${sweet.price}, Price value: ${sweet.priceValue}`);
         });
@@ -39,6 +39,16 @@ export class SweetsComponent implements OnInit {
         console.error('Error fetching sweets data', error);
       }
     );
+  }
+
+  // Helper method to extract price from string
+  private extractPriceFromString(priceString: string): number {
+    // Match numbers (including decimals) from the string
+    const match = priceString.match(/(\d+(\.\d+)?)/);
+    if (match) {
+      return parseFloat(match[0]);
+    }
+    return 0; // Default to 0 if no number found
   }
 
  
