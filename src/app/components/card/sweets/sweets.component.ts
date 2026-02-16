@@ -51,5 +51,23 @@ export class SweetsComponent implements OnInit {
     return 0; // Default to 0 if no number found
   }
 
- 
+  addToCart(sweet: any) {
+    
+    if (sweet.quantity > 0) {
+      // Add item to cart service WITH QUANTITY
+      this.cartService.addItem({
+        name: sweet.title,
+        price: sweet.priceValue,
+        category: 'Sweets',
+        quantity: sweet.quantity ,
+        image : sweet.image
+      });
+      
+      // Reset quantity after adding to cart
+      sweet.quantity = 0;
+      console.log(`Added ${sweet.quantity} items to cart`);
+    } else {
+      console.log('Quantity is 0, not adding to cart');
+    }
+  }
 }
