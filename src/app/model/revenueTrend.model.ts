@@ -1,4 +1,6 @@
+// revenueTrend.model.ts
 export interface RevenueTrend {
-    month: string;
-    revenue: number;
+    day: string;        // "Day 1", "Mon 15" වගේ
+    date?: string;      // ඕන නම් date එකත් තියාගන්න
+    revenue: number; 
 }
