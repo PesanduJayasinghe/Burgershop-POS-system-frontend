@@ -43,7 +43,7 @@ export class SweetsComponent implements OnInit {
 
   // Helper method to extract price from string
   private extractPriceFromString(priceString: string): number {
-    // Match numbers (including decimals) from the string
+   
     const match = priceString.match(/(\d+(\.\d+)?)/);
     if (match) {
       return parseFloat(match[0]);
@@ -72,7 +72,7 @@ export class SweetsComponent implements OnInit {
         price: sweet.priceValue,
         category: 'Sweets',
         quantity: sweet.quantity ,
-        image : sweet.image
+        image : sweet.image // Pass the quantity
       });
       
       // Reset quantity after adding to cart
