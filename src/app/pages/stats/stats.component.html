@@ -1,0 +1,208 @@
+<div class="main">
+  <!-- Navbar at the very top - full width -->
+  <div class="navbar-full">
+    <app-nav-bar></app-nav-bar>
+  </div>
+
+  <!-- Content below navbar - Sidebar + Dashboard -->
+  <div class="content-row">
+    <!-- Sidebar - Always visible, fixed width -->
+    <div class="sidebar-fixed">
+      <app-side-bar></app-side-bar>
+    </div>
+
+    <!-- Analytics Dashboard Container - Takes remaining space -->
+    <div class="dashboard-container">
+
+      <!-- Header -->
+      <div class="dashboard-header full-width">
+        <h1><strong>Analytics Dashboard</strong></h1>
+        <div class="date-range">
+          <span><app-calender></app-calender></span>
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+      </div>
+
+      <!-- KPI Cards - 3 in a row -->
+      <div class="kpi-grid full-width">
+        <div class="kpi-card">
+          <div class="kpi-icon revenue">💰</div>
+          <div class="kpi-content">
+            <h3>Today Revenue</h3>
+            <div class="kpi-value">LKR. {{ todayRevenue }}.00 </div>
+            <!-- <div class="kpi-trend positive">+12.3%</div> -->
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon users">👥</div>
+          <div class="kpi-content">
+            <h3>Today Customers Count</h3>
+            <div class="kpi-value">{{ todayCutomer }}</div>
+            <!-- <div class="kpi-trend positive">+8.1%</div> -->
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon sessions">🔄</div>
+          <div class="kpi-content">
+            <h3>Best Item of Today</h3>
+            <div class="kpi-value">{{productName}} ( {{quantity}} )</div>
+            <div class="kpi-trend positive">+5.7%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Grid - 3 columns -->
+      <div class="dashboard-grid full-width">
+        <!-- Column 1: Revenue Chart -->
+        <div class="grid-col col-1">
+          <div class="chart-container">
+            <div class="chart-header">
+              <h2>Revenue Trend</h2>
+              <div class="chart-legend">
+                <span class="legend-item revenue">Revenue ($K)</span>
+              </div>
+            </div>
+
+            <div class="revenue-chart">
+              <!-- Y-axis labels -->
+              <div class="y-axis">
+                <span>$80K</span>
+                <span>$70K</span>
+                <span>$60K</span>
+                <span>$50K</span>
+                <span>$40K</span>
+                <span>$30K</span>
+                <span>$20K</span>
+                <span>$10K</span>
+                <span>$0K</span>
+              </div>
+
+              <!-- Chart bars -->
+              <div class="chart-bars">
+                <div class="bar-container">
+                  <div class="bar-wrapper">
+                    <div class="bar" style="height: 36%" data-value="$36K"></div>
+                  </div>
+                  <span class="bar-label"><strong>Day 1</strong></span>
+                </div>
+                <div class="bar-container">
+                  <div class="bar-wrapper">
+                    <div class="bar" style="height: 36%" data-value="$36K"></div>
+                  </div>
+                  <span class="bar-label"><strong>Day 2</strong></span>
+                </div>
+                <div class="bar-container">
+                  <div class="bar-wrapper">
+                    <div class="bar" style="height: 41.6%" data-value="$41.6K"></div>
+                  </div>
+                  <span class="bar-label"><strong>Day 3</strong></span>
+                </div>
+                <div class="bar-container">
+                  <div class="bar-wrapper">
+                    <div class="bar" style="height: 38%" data-value="$30.4K"></div>
+                  </div>
+                  <span class="bar-label"><strong>Day 4</strong></span>
+                </div>
+                <div class="bar-container">
+                  <div class="bar-wrapper">
+                    <div class="bar" style="height: 65%" data-value="$52K"></div>
+                  </div>
+                  <span class="bar-label"><strong>Day 5</strong></span>
+                </div>
+                <div class="bar-container">
+                  <div class="bar-wrapper">
+                    <div class="bar" style="height: 72%" data-value="$57.6K"></div>
+                  </div>
+                  <span class="bar-label"><strong>Day 6</strong></span>
+                </div>
+                <div class="bar-container">
+                  <div class="bar-wrapper">
+                    <div class="bar" style="height: 58%" data-value="$46.4K"></div>
+                  </div>
+                  <span class="bar-label"><strong>Day 7</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="chart-footer">
+              <span>Revenue (LKR) - Last week</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Top Products -->
+        <div class="grid-col col-2">
+          <div class="stats-card">
+            <h2>Top Products</h2>
+            <table class="products-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Type</th>
+                  <th>Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (product of top10Products; track $index) {
+                <tr>
+                  <td class="product-name">{{ product.name }}</td>
+                  <td class="product-type">{{ product.type }}</td>
+                  <td class="product-count">{{ product.count }}</td>
+                </tr>
+                } @empty {
+                <tr>
+                  <td colspan="3" class="text-center">Top products නැහැ</td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Column 3: Traffic Sources -->
+        <div class="grid-col col-3">
+          <div class="stats-card">
+            <h2>Traffic Sources</h2>
+            <div class="source-list">
+              <div class="source-item">
+                <span class="source-name">Organic Search</span>
+                <div class="source-bar">
+                  <div class="bar-fill" style="width: 45%"></div>
+                </div>
+                <span class="source-value">45%</span>
+              </div>
+              <div class="source-item">
+                <span class="source-name">Direct</span>
+                <div class="source-bar">
+                  <div class="bar-fill" style="width: 25%"></div>
+                </div>
+                <span class="source-value">25%</span>
+              </div>
+              <div class="source-item">
+                <span class="source-name">Social Media</span>
+                <div class="source-bar">
+                  <div class="bar-fill" style="width: 15%"></div>
+                </div>
+                <span class="source-value">15%</span>
+              </div>
+              <div class="source-item">
+                <span class="source-name">Email</span>
+                <div class="source-bar">
+                  <div class="bar-fill" style="width: 10%"></div>
+                </div>
+                <span class="source-value">10%</span>
+              </div>
+              <div class="source-item">
+                <span class="source-name">Referral</span>
+                <div class="source-bar">
+                  <div class="bar-fill" style="width: 5%"></div>
+                </div>
+                <span class="source-value">5%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
