@@ -1,0 +1,28 @@
+<!-- Time Display -->
+<div class="time-display" [class.mobile-hidden]="!showTimeOnMobile">
+    <div class="time-container">
+        <div class="time-icon">
+            <i class="fas fa-clock"></i>
+        </div>
+        <div class="time-info">
+            <span class="current-time">{{ currentTime }}</span>
+            <span class="current-date">{{ currentDate }}</span>
+        </div>
+    </div>
+</div>
+
+<!-- Mobile time toggle button (visible only on mobile) -->
+<button class="mobile-time-toggle" (click)="toggleMobileTime()" aria-label="Toggle time display">
+    <i class="fas fa-clock"></i>
+</button>
+
+<!-- Mobile time card that appears below navbar -->
+<div class="mobile-time-card" *ngIf="showMobileTimeCard" [class.show]="showMobileTimeCard">
+    <div class="mobile-time-container">
+        <i class="fas fa-clock"></i>
+        <div class="mobile-time-info">
+            <span class="mobile-current-time">{{ currentTime }}</span>
+            <span class="mobile-current-date">{{ currentDate }}</span>
+        </div>
+    </div>
+</div>
