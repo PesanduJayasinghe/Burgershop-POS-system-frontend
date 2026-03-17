@@ -1,0 +1,41 @@
+<div id="main">
+    <header class="">
+        <nav aria-label="Global" class="flex items-center justify-between p-6 lg:px-8">
+            <div class="flex lg:flex-1"
+                style="display: flex; align-items: center; position: absolute; left: 0; margin-left: 10px;">
+                <a routerLink="/" class="-m-1.5 p-1.5">
+                    <span class="sr-only">Your Company</span>
+                    <img src="https://img.icons8.com/?size=100&id=ZF7hWVW0tEYV&format=png&color=000000" alt=""
+                        class="h-12 w-auto" />
+                </a>
+            </div>
+
+            <div class="links">
+                <!-- Updated with routerLink -->
+                <div class="glass-radio-group">
+                    <!-- Burgers Button -->
+                    <input type="radio" name="plan" id="glass-silver" 
+                           [checked]="isActive('/burgers')" 
+                           (click)="navigateTo('burgers')" />
+                    <label for="glass-silver" (click)="navigateTo('burgers')">Burgers</label>
+
+                    <!-- Beverages Button -->
+                    <input type="radio" name="plan" id="glass-gold" 
+                           [checked]="isActive('/beverages')" 
+                           (click)="navigateTo('beverages')" />
+                    <label for="glass-gold" (click)="navigateTo('beverages')">Beverages</label>
+
+                    <!-- Sweets Button -->
+                    <input type="radio" name="plan" id="glass-platinum" 
+                           [checked]="isActive('/sweets')" 
+                           (click)="navigateTo('sweets')" />
+                    <label for="glass-platinum" (click)="navigateTo('sweets')">Sweets</label>
+
+                    <div class="glass-glider"></div>
+                </div>
+            </div>
+
+            
+        </nav>
+    </header>
+</div>

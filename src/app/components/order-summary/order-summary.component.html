@@ -1,0 +1,90 @@
+<div class="order-summary-container">
+  <!-- Order Header -->
+  <div class="order-header">
+    <h2 class="order-title">
+      <i class="fas fa-receipt mr-2"></i> Current Order
+    </h2>
+    <span class="item-count">{{ getItemCount() }} items</span>
+  </div>
+
+  <!-- Order Items List -->
+  <div class="order-items-list">
+    @if (orderItems.length === 0) {
+      <div class="empty-order">
+        <i class="fas fa-shopping-cart text-gray-300 text-4xl mb-3"></i>
+        <p class="text-gray-500">No items added yet</p>
+        <p class="text-gray-400 text-sm">Add items from the menu</p>
+      </div>
+    }
+    
+    @for (item of orderItems; track item.name + item.category; let i = $index) {
+      <div class="order-item">
+        <div class="item-info">
+          <h4 class="item-name">{{ item.name }}</h4>
+          <div class="item-controls">
+            <button (click)="decreaseQuantity(i)" class="qty-btn" [disabled]="item.quantity < 1">-
+              <i class="fas fa-minus"></i>
+            </button>
+            <span class="item-qty">{{ item.quantity }}</span>
+            <button (click)="increaseQuantity(i)" class="qty-btn">+
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="item-price">
+          <!-- Add safe navigation and default value -->
+          <div class="price-amount">LKR {{ getItemTotal(item) }}</div>
+          <div class="price-unit">LKR {{ getItemPrice(item) }} each</div>
+          <button (click)="removeItem(i)" class="remove-btn">Remove
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Order Summary -->
+  <div class="order-totals">
+    <div class="total-row">
+      <span>Subtotal</span>
+      <!-- Use safe navigation -->
+      <span>LKR {{ getSafeNumber(orderSummary.subtotal) }}</span>
+    </div>
+    <div class="total-row">
+      <span>Tax (8%)</span>
+      <span>LKR {{ getSafeNumber(orderSummary.tax) }}</span>
+    </div>
+    <div class="total-row">
+      <span>Service Fee</span>
+      <span>LKR {{ getSafeNumber(orderSummary.serviceFee) }}</span>
+    </div>
+    
+    <div class="total-row grand-total">
+      <span>Total</span>
+      <span class="total-amount">LKR {{ getSafeNumber(orderSummary.total) }}</span>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="action-buttons">
+    <button (click)="clearOrder()" class="bn632-hover bn21" [disabled]="orderItems.length === 0">
+      <i class="fas fa-trash-alt mr-2"></i> Clear Order
+    </button>
+    <button (click)="proceedToCheckout()" class="bn632-hover bn26" [disabled]="orderItems.length === 0">
+      <i class="fas fa-credit-card mr-2"></i> Checkout
+    </button>
+  </div>
+
+  <!-- Order Status -->
+  <div class="order-status">
+    <div class="status-indicator">
+      <span class="status-dot preparing"></span>
+      <span class="status-text">Preparing</span>
+    </div>
+    <div class="estimated-time">
+      <i class="fas fa-clock mr-1"></i>
+      Est. Time: 15-20 min
+    </div>
+  </div>
+</div>

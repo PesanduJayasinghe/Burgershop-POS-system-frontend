@@ -1,36 +1,36 @@
 <!-- From Uiverse.io by SachinKumar666 --> 
 <div class="page-content">
-   <div class="beverages-scroll-container ">
-  @for (beverage of beverages; track beverage.title) {
+   <div class="sweets-scroll-container ">
+ @for (sweet of sweets; track sweet.title) {
 <div class="card">
   <div class="card__shine"></div>
   <div class="card__glow"></div>
   <div class="card__content">
    
     <div class="card__badge">NEW</div>
-    <div style="" class="burger-image"> <img [src]="beverage.image" [alt]="beverage.title" /></div>
+    <div style="" class="burger-image"> <img [src]="sweet.image" [alt]="sweet.title" /></div>
     <div class="card__text">
-      <p class="card__title">{{ beverage.title }}</p>
+      <p class="card__title">{{ sweet.title }}</p>
     </div>
 
     
        <!-- Quantity Controls -->
           <div class="quantity-controls">
-            <button (click)="decreaseQuantity(beverage)" [disabled]="beverage.quantity === 0">
+            <button (click)="decreaseQuantity(sweet)" [disabled]="sweet.quantity === 0">
               -
             </button>
-            <span>{{ beverage.quantity }}</span>
-            <button (click)="increaseQuantity(beverage)">
+            <span>{{ sweet.quantity || 0 }}</span>
+            <button (click)="increaseQuantity(sweet)">
               +
             </button>
           </div>
 
 
     <div class="card__footer">
-      <div class="card__price">{{ beverage.price }}</div>
+      <div class="card__price">{{ sweet.price }}</div>
 
 
-      <button (click)="addToCart(beverage)"  >
+      <button (click)="addToCart(sweet)" >
       <div class="card__button">
         <svg height="16" width="16" viewBox="0 0 24 24" >
           <path 

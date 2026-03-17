@@ -1,1 +1,27 @@
-<app-nav-bar></app-nav-bar>
+<div class="main">
+  <!-- Navbar at the very top - full width -->
+  <div class="navbar-full">
+    <app-nav-bar></app-nav-bar>
+  </div>
+
+  <!-- Content below navbar - Sidebar + Dashboard -->
+  <div class="content-row">
+    <!-- Sidebar - Always visible, fixed width -->
+    <div class="sidebar-fixed">
+      <app-side-bar></app-side-bar>
+    </div>
+
+    <!-- Dashboard Container - Takes remaining space -->
+    <div class="dashboard-container">
+      <!-- Left side: Menu items (router outlet) -->
+      <div class="menu-section">
+        <router-outlet></router-outlet>
+      </div>
+
+      <!-- Right side: Order summary -->
+      <div class="order-section">
+        <app-order-summary></app-order-summary>
+      </div>
+    </div>
+  </div>
+</div>

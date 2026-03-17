@@ -2,76 +2,33 @@
   padding: 20px;
 }
 
-.beverages-scroll-container {
+.burgers-scroll-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
-  gap: 10px;
+  gap: 9px;
+
+  
 }
 
 /* Responsive grid */
 @media (max-width: 1200px) {
-  .beverages-scroll-container {
+  .burgers-scroll-container {
     grid-template-columns: repeat(3, 1fr); /* 3 cards on medium screens */
   }
 }
 
 @media (max-width: 900px) {
-  .beverages-scroll-container {
+  .burgers-scroll-container {
     grid-template-columns: repeat(2, 1fr); /* 2 cards on tablets */
   }
 }
 
 @media (max-width: 600px) {
-  .beverages-scroll-container {
-    grid-template-columns: repeat(2, 1fr);/* 1 card on mobile */
+  .burgers-scroll-container {
+    grid-template-columns: repeat(2, 1fr); /* 1 card on mobile */
   }
 }
 
-.beverage-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  overflow: hidden;
-  width: 100%; /* Changed from fixed width to 100% */
-  transition: transform 0.3s;
-  display: flex;
-  flex-direction: column;
-}
-
-.beverage-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
-}
-
-.beverage-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.card-body {
-  padding: 15px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.card-body h5 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.price-badge {
-  background: #3b82f6;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  display: inline-block;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
 
 .quantity-controls {
   display: flex;
@@ -85,16 +42,16 @@
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  border: 2px solid #3b82f6;
+  border: 2px solid #f97316; /* Orange border for burgers */
   background: white;
-  color: #3b82f6;
+  color: #f97316;
   font-size: 18px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .quantity-controls button:hover:not([disabled]) {
-  background: #3b82f6;
+  background: #f97316;
   color: white;
 }
 
@@ -110,26 +67,11 @@
   text-align: center;
 }
 
-.add-to-cart-btn {
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(to right, #4458ef, #008892);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-top: auto; /* Pushes button to bottom */
-}
 
-.add-to-cart-btn:hover {
-  background: linear-gradient(to right, #3e26dc, #048da5);
-}
-
+/* From Uiverse.io by SachinKumar666 */ 
 .card {
   --card-bg: #ffffff;
-  --card-accent: #00a9ca;
+  --card-accent: #f97316;
   --card-text: #1e293b;
   --card-shadow: 0 10px 15px -3px #f5f916(0, 0, 0, 0.05);
 
@@ -164,7 +106,7 @@
   inset: -10px;
   background: radial-gradient(
     circle at 50% 0%,
-    rgba(0, 255, 26, 0.601) 0%,
+    rgba(253, 145, 3, 0.977) 0%,
     rgba(124, 58, 237, 0) 70%
   );
   opacity: 0;
