@@ -63,70 +63,61 @@
               </div>
             </div>
 
-            <div class="revenue-chart">
-              <!-- Y-axis labels -->
-              <div class="y-axis">
-                <span>$80K</span>
-                <span>$70K</span>
-                <span>$60K</span>
-                <span>$50K</span>
-                <span>$40K</span>
-                <span>$30K</span>
-                <span>$20K</span>
-                <span>$10K</span>
-                <span>$0K</span>
-              </div>
+            <div class="line-chart-wrapper">
+              @if (revenueTrend.length > 0) {
+              <svg class="line-chart" viewBox="0 0 800 250" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.3" />
+                    <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0" />
+                  </linearGradient>
+                </defs>
 
-              <!-- Chart bars -->
-              <div class="chart-bars">
-                <div class="bar-container">
-                  <div class="bar-wrapper">
-                    <div class="bar" style="height: 36%" data-value="$36K"></div>
-                  </div>
-                  <span class="bar-label"><strong>Day 1</strong></span>
+                <!-- Grid lines -->
+                <g class="grid">
+                  <line x1="40" y1="30" x2="780" y2="30" stroke="#e2e8f0" stroke-width="1" />
+                  <line x1="40" y1="85" x2="780" y2="85" stroke="#e2e8f0" stroke-width="1" />
+                  <line x1="40" y1="140" x2="780" y2="140" stroke="#e2e8f0" stroke-width="1" />
+                  <line x1="40" y1="195" x2="780" y2="195" stroke="#e2e8f0" stroke-width="1" />
+                </g>
+
+                <!-- Y-axis labels -->
+                <text x="30" y="35" font-size="11" fill="#9ca3af" text-anchor="end">{{ (maxRevenue * 0.75) |
+                  number:'1.0-0' }}</text>
+                <text x="30" y="90" font-size="11" fill="#9ca3af" text-anchor="end">{{ (maxRevenue * 0.5) |
+                  number:'1.0-0' }}</text>
+                <text x="30" y="145" font-size="11" fill="#9ca3af" text-anchor="end">{{ (maxRevenue * 0.25) |
+                  number:'1.0-0' }}</text>
+                <text x="30" y="200" font-size="11" fill="#9ca3af" text-anchor="end">0</text>
+
+                <!-- Area and line -->
+                <g [attr.data-path]="getChartPath()">
+                  <polygon [attr.points]="getAreaPath()" fill="url(#chartGradient)" />
+                  <polyline [attr.points]="getLinePath()" fill="none" stroke="#3b82f6" stroke-width="2.5"
+                    stroke-linejoin="round" stroke-linecap="round" />
+                </g>
+
+                <!-- Data points -->
+                @for (item of revenueTrend; track $index) {
+                <circle [attr.cx]="getPointX($index)" [attr.cy]="getPointY(item.revenue)" r="3.5" fill="#3b82f6" />
+                }
+              </svg>
+
+              <!-- Legend below chart -->
+              <div class="chart-legend-bottom">
+                @for (item of revenueTrend; track $index) {
+                <div class="legend-item-x">
+                  <span class="date-label">{{ formatDay(item.date || '', $index) }}</span>
+                  <span class="value-label">LKR {{ item.revenue | number:'1.0-0' }}</span>
                 </div>
-                <div class="bar-container">
-                  <div class="bar-wrapper">
-                    <div class="bar" style="height: 36%" data-value="$36K"></div>
-                  </div>
-                  <span class="bar-label"><strong>Day 2</strong></span>
-                </div>
-                <div class="bar-container">
-                  <div class="bar-wrapper">
-                    <div class="bar" style="height: 41.6%" data-value="$41.6K"></div>
-                  </div>
-                  <span class="bar-label"><strong>Day 3</strong></span>
-                </div>
-                <div class="bar-container">
-                  <div class="bar-wrapper">
-                    <div class="bar" style="height: 38%" data-value="$30.4K"></div>
-                  </div>
-                  <span class="bar-label"><strong>Day 4</strong></span>
-                </div>
-                <div class="bar-container">
-                  <div class="bar-wrapper">
-                    <div class="bar" style="height: 65%" data-value="$52K"></div>
-                  </div>
-                  <span class="bar-label"><strong>Day 5</strong></span>
-                </div>
-                <div class="bar-container">
-                  <div class="bar-wrapper">
-                    <div class="bar" style="height: 72%" data-value="$57.6K"></div>
-                  </div>
-                  <span class="bar-label"><strong>Day 6</strong></span>
-                </div>
-                <div class="bar-container">
-                  <div class="bar-wrapper">
-                    <div class="bar" style="height: 58%" data-value="$46.4K"></div>
-                  </div>
-                  <span class="bar-label"><strong>Day 7</strong></span>
-                </div>
+                }
               </div>
+              } @else {
+              <div class="no-data">No revenue data available</div>
+              }
             </div>
 
-            <div class="chart-footer">
-              <span>Revenue (LKR) - Last week</span>
-            </div>
+
           </div>
         </div>
 
