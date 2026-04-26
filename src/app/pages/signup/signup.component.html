@@ -1,0 +1,24 @@
+<div class="auth-shell">
+    <div class="auth-card">
+        <h1>Cashier Sign Up</h1>
+        <p class="hint">Recommended password for testing: pos123</p>
+
+        <label>Name</label>
+        <input type="text" [(ngModel)]="name" placeholder="Enter cashier name" />
+
+        <label>Password</label>
+        <input type="password" [(ngModel)]="password" placeholder="Enter password" />
+
+        @if (error) {
+        <p class="error">{{ error }}</p>
+        }
+
+        @if (success) {
+        <p class="success">{{ success }}</p>
+        }
+
+        <button (click)="onSignUp()">Create Account</button>
+
+        <p class="switch">Already have an account? <a routerLink="/login">Login</a></p>
+    </div>
+</div>
