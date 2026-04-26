@@ -1,0 +1,41 @@
+<div class="page-shell">
+    <div class="navbar-full">
+        <app-nav-bar></app-nav-bar>
+    </div>
+
+    <div class="content-row">
+        <div class="sidebar-fixed">
+            <app-side-bar></app-side-bar>
+        </div>
+
+        <div class="page-content">
+            <div class="header-row">
+                <h1>Kitchen Notifications</h1>
+                <button class="refresh-btn" (click)="loadNotifications()">Refresh</button>
+            </div>
+
+            @if (isLoading) {
+            <div class="state-card">Loading ready orders...</div>
+            }
+
+            @if (!isLoading && notifications.length === 0) {
+            <div class="state-card">No orders are ready yet. Orders appear here after 5 minutes.</div>
+            }
+
+            <div class="grid">
+                @for (notification of notifications; track notification.orderId) {
+                <div class="notification-card">
+                    <div class="badge">Ready To Pick Up</div>
+                    <h2>{{ notification.orderNumber }}</h2>
+                    <p>{{ notification.message }}</p>
+                    <div class="meta">
+                        <span>Placed: {{ formatTime(notification.placedAt) }}</span>
+                        <span>Ready: {{ formatTime(notification.readyAt) }}</span>
+                    </div>
+                    <div class="cashier">Cashier: {{ notification.cashierName || 'Unknown' }}</div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
