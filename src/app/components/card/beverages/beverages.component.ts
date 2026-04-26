@@ -21,7 +21,7 @@ export class BeveragesComponent implements OnInit {
 
     this.beveragesService.getAll().subscribe(
       (data) => {
-              this.beverages = data;
+        this.beverages = data;
 
         this.beverages.forEach(beverage => {
           if (beverage.quantity === undefined) {
@@ -61,14 +61,15 @@ export class BeveragesComponent implements OnInit {
     if (beverage.quantity > 0) {
 
       this.cartService.addItem({
+        itemId: beverage.id,
         name: beverage.title,
         price: beverage.priceValue,
         category: 'Beverages',
         quantity: beverage.quantity,
-        image : beverage.image
+        image: beverage.image
       });
       beverage.quantity = 0;
-    
+
     } else {
 
     }

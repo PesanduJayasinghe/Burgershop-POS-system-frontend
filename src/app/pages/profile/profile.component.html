@@ -1,0 +1,26 @@
+<div class="page-shell">
+    <div class="navbar-full">
+        <app-nav-bar></app-nav-bar>
+    </div>
+
+    <div class="content-row">
+        <div class="sidebar-fixed">
+            <app-side-bar></app-side-bar>
+        </div>
+
+        <div class="page-content">
+            <div class="profile-card">
+                <h1>Cashier Profile</h1>
+
+                @if (cashier) {
+                <p class="label">Current Cashier</p>
+                <p class="name">{{ cashier.name }}</p>
+                } @else {
+                <p class="name">No cashier is logged in.</p>
+                }
+
+                <button class="logout-btn" (click)="logout()">Log Out</button>
+            </div>
+        </div>
+    </div>
+</div>

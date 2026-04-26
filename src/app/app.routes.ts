@@ -5,9 +5,16 @@ import { BeveragesComponent } from './components/card/beverages/beverages.compon
 import { SweetsComponent } from './components/card/sweets/sweets.component';
 import { CartComponent } from './components/cart/cart.component';
 import { StatsComponent } from './pages/stats/stats.component';
+import { NotificationsComponent } from './pages/notifications/notifications.component';
+import { SearchComponent } from './pages/search/search.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignupComponent } from './pages/signup/signup.component';
 
 
 export const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   {
     path: '',
     component: DashboardComponent,
@@ -19,10 +26,10 @@ export const routes: Routes = [
       { path: 'cart', component: CartComponent }
     ]
   },
-
-  { path: 'stats', component: StatsComponent } 
-
-
+  { path: 'stats', component: StatsComponent },
+  { path: 'notifications', component: NotificationsComponent },
+  { path: 'search', component: SearchComponent },
+  { path: 'profile', component: ProfileComponent }
 
 ];
 

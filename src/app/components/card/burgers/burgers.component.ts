@@ -11,25 +11,25 @@ import { BurgersService } from '../../../services/burgers/burgers.service';
 export class BurgersComponent implements OnInit {
 
   burgers: any[] = [];
-  
+
   constructor(
     private burgerService: BurgersService,
     private cartService: CartService
-  ) {}
+  ) { }
 
   // ngOnInit(): void {
   //   // this.burgers = this.burgerService.getBurgers();
-    
+
   //   // Add priceValue by extracting from price string
   //   this.burgers.forEach(burger => {
   //     if (burger.quantity === undefined) {
   //       burger.quantity = 0;
   //     }
-      
+
   //     // Extract numeric price from price string
   //     // Example: "LKR 500.00/=" → 500
   //     burger.priceValue = this.extractPriceFromString(burger.price);
-      
+
   //     console.log(`Burger: ${burger.title}, Price string: ${burger.price}, Price value: ${burger.priceValue}`);
   //   });
   // }
@@ -82,18 +82,19 @@ export class BurgersComponent implements OnInit {
   }
 
   addToCart(burger: any) {
-    
-      if (burger.quantity > 0) {
+
+    if (burger.quantity > 0) {
 
       this.cartService.addItem({
+        itemId: burger.id,
         name: burger.title,
         price: burger.priceValue,
         category: 'Burgers',
         quantity: burger.quantity,
-        image : burger.image
+        image: burger.image
       });
       burger.quantity = 0;
-    
+
     } else {
 
     }

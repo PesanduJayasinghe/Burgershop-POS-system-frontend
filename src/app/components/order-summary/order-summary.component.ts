@@ -2,13 +2,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartItem, CartService, OrderSummary } from '../../services/cart.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { OrderApiService } from '../../services/orders/order-api.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-order-summary',
   templateUrl: './order-summary.component.html',
   styleUrls: ['./order-summary.component.css'],
-  imports: [CommonModule,RouterModule]
+  imports: [CommonModule, RouterModule]
 })
 export class OrderSummaryComponent implements OnInit {
   orderItems: CartItem[] = [];
@@ -19,7 +21,12 @@ export class OrderSummaryComponent implements OnInit {
     total: 50
   };
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private orderApiService: OrderApiService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     // Subscribe to cart changes
@@ -76,11 +83,59 @@ export class OrderSummaryComponent implements OnInit {
   }
 
   proceedToCheckout(): void {
-    if (this.orderItems.length > 0) {
-      alert('Proceeding to checkout!');
-      // Add your checkout logic here
-    } else {
+    if (this.orderItems.length === 0) {
       alert('Please add items to cart first!');
+      return;
     }
+
+    const currentCashier = this.authService.getCurrentCashier();
+
+    if (!currentCashier) {
+      alert('Please login as a cashier before checkout.');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const items = this.orderItems
+      .filter((item) => !!item.itemId)
+      .map((item) => ({
+        itemType: this.mapCategoryToItemType(item.category),
+        itemId: item.itemId as number,
+        quantity: item.quantity,
+        unitPrice: item.price
+      }));
+
+    if (items.length === 0) {
+      alert('Unable to checkout: item IDs are missing.');
+      return;
+    }
+
+    this.orderApiService.checkout({
+      cashierName: currentCashier.name,
+      totalAmount: this.orderSummary.total,
+      items
+    }).subscribe({
+      next: (response) => {
+        alert(`Order ${response.orderId} placed successfully! Ready in 5 minutes.`);
+        this.clearOrder();
+      },
+      error: () => {
+        alert('Checkout failed. Please try again.');
+      }
+    });
+  }
+
+  private mapCategoryToItemType(category: string | undefined): 'BURGER' | 'BEVERAGE' | 'SWEET' {
+    const value = (category || '').toLowerCase();
+
+    if (value.includes('burger')) {
+      return 'BURGER';
+    }
+
+    if (value.includes('beverage')) {
+      return 'BEVERAGE';
+    }
+
+    return 'SWEET';
   }
 }

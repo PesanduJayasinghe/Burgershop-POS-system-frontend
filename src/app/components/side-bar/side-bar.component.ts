@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Route, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-side-bar',
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.css'
 })
-export class SideBarComponent implements OnInit{
+export class SideBarComponent implements OnInit {
 
-  constructor(private router: Router){}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     if (this.router.url === '/') {
@@ -18,8 +18,12 @@ export class SideBarComponent implements OnInit{
     }
   }
 
-   navigateTo(category: string): void {
+  navigateTo(category: string): void {
     this.router.navigate([category]);
+  }
+
+  isActive(path: string): boolean {
+    return this.router.url === path || this.router.url.startsWith(path + '/');
   }
 
 }

@@ -1,0 +1,32 @@
+<div class="page-shell">
+    <div class="navbar-full">
+        <app-nav-bar></app-nav-bar>
+    </div>
+
+    <div class="content-row">
+        <div class="sidebar-fixed">
+            <app-side-bar></app-side-bar>
+        </div>
+
+        <div class="page-content">
+            <h1>Search Menu</h1>
+            <div class="search-box">
+                <input type="text" [(ngModel)]="query" placeholder="Search by item name or category"
+                    (input)="onSearch()" />
+            </div>
+
+            <div class="results-grid">
+                @for (item of filteredItems; track item.category + item.id) {
+                <div class="result-card">
+                    <img [src]="item.image" [alt]="item.title" />
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.category }}</p>
+                    <strong>{{ item.price }}</strong>
+                </div>
+                } @empty {
+                <div class="empty">No matching items found.</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

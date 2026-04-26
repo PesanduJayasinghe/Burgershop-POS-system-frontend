@@ -10,11 +10,11 @@ import { SweetsService } from '../../../services/sweets/sweets.service';
 export class SweetsComponent implements OnInit {
 
   sweets: any[] = [];
-  
+
   constructor(
     private sweetsService: SweetsService,
     private cartService: CartService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Subscribe to the Observable returned by the SweetsService
@@ -43,7 +43,7 @@ export class SweetsComponent implements OnInit {
 
   // Helper method to extract price from string
   private extractPriceFromString(priceString: string): number {
-   
+
     const match = priceString.match(/(\d+(\.\d+)?)/);
     if (match) {
       return parseFloat(match[0]);
@@ -64,17 +64,18 @@ export class SweetsComponent implements OnInit {
   }
 
   addToCart(sweet: any) {
-    
+
     if (sweet.quantity > 0) {
       // Add item to cart service WITH QUANTITY
       this.cartService.addItem({
+        itemId: sweet.id,
         name: sweet.title,
         price: sweet.priceValue,
         category: 'Sweets',
-        quantity: sweet.quantity ,
-        image : sweet.image // Pass the quantity
+        quantity: sweet.quantity,
+        image: sweet.image // Pass the quantity
       });
-      
+
       // Reset quantity after adding to cart
       sweet.quantity = 0;
       console.log(`Added ${sweet.quantity} items to cart`);
