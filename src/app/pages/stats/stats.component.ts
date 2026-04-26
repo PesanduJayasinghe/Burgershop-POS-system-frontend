@@ -46,7 +46,6 @@ export class StatsComponent implements OnInit {
   ngOnInit(): void {
     this.loadData();
     this.loadAllData();
-    this.setTopProduct();
   }
 
   loadData(): void {
@@ -63,47 +62,14 @@ export class StatsComponent implements OnInit {
       next: (data) => {
         this.revenueTrend = data;
         this.maxRevenue = Math.max(...data.map(item => item.revenue));
-        console.log('Max revenue:', this.maxRevenue);
+        this.calculatePercentages();
       }
     });
 
   }
 
-  setTopProduct(): void {
-
-    this.statsService.getTopProducts().subscribe({
-      next: (data) => {
-
-        if (data[0].itemType.toLowerCase() === 'burger') {
-          const foundBurger = this.burger.find(b => b.id === this.topProducts[0].itemId);
-          if (foundBurger) {
-            this.productName = foundBurger.title;
-            this.quantity = data[0].quantity;
-            console.log(this.productName);
-          }
-
-        } else if (data[0].itemType.toLowerCase() === 'beverage') {
-          const foundBeverage = this.beverage.find(b => b.id === this.topProducts[0].itemId);
-          if (foundBeverage) {
-            this.productName = foundBeverage.title;
-            this.quantity = data[0].quantity;
-            console.log(this.productName);
-          }
-
-        } else if (data[0].itemType.toLowerCase() === 'sweet') {
-          const foundSweet = this.sweet.find(s => s.id === this.topProducts[0].itemId);
-          if (foundSweet) {
-            this.productName = foundSweet.title;
-            this.quantity = data[0].quantity;
-            console.log(this.productName);
-          }
-        }
-      }
-    })
-  }
-
   loadAllData(): void {
-    
+
     forkJoin({
       topProducts: this.statsService.getTopProducts(),
       burgers: this.burgerService.getAll(),
@@ -116,9 +82,45 @@ export class StatsComponent implements OnInit {
         this.beverage = result.beverages;
         this.sweet = result.sweets;
 
+        this.setTopProduct();
         this.generateTop10Products();
       }
     });
+  }
+
+  setTopProduct(): void {
+    if (!this.topProducts.length) {
+      this.productName = 'No item';
+      this.quantity = 0;
+      return;
+    }
+
+    const topItem = this.topProducts[0];
+    const itemType = topItem.itemType?.toLowerCase();
+
+    if (itemType === 'burger') {
+      const foundBurger = this.burger.find(b => b.id === topItem.itemId);
+      if (foundBurger) {
+        this.productName = foundBurger.title;
+        this.quantity = topItem.quantity;
+      }
+      return;
+    }
+
+    if (itemType === 'beverage') {
+      const foundBeverage = this.beverage.find(b => b.id === topItem.itemId);
+      if (foundBeverage) {
+        this.productName = foundBeverage.title;
+        this.quantity = topItem.quantity;
+      }
+      return;
+    }
+
+    const foundSweet = this.sweet.find(s => s.id === topItem.itemId);
+    if (foundSweet) {
+      this.productName = foundSweet.title;
+      this.quantity = topItem.quantity;
+    }
   }
 
   generateTop10Products(): void {
@@ -160,7 +162,7 @@ export class StatsComponent implements OnInit {
     this.maxRevenue = Math.max(...this.revenueTrend.map(item => item.revenue));
 
     this.revenueTrend = this.revenueTrend.map(item => {
-      const percentage = (item.revenue / this.maxRevenue) * 100;
+      const percentage = this.maxRevenue === 0 ? 0 : (item.revenue / this.maxRevenue) * 100;
       return {
         ...item,
         percentage: Math.round(percentage * 10) / 10 // 1 decimal place
@@ -172,6 +174,39 @@ export class StatsComponent implements OnInit {
   getBarHeight(percentage: number | undefined): string {
     if (!percentage) return '0%';
     return percentage + '%';
+  }
+
+  getPointX(index: number): number {
+    if (!this.revenueTrend || this.revenueTrend.length === 0) return 0;
+    const spacing = (780 - 80) / Math.max(this.revenueTrend.length - 1, 1);
+    return 40 + index * spacing;
+  }
+
+  getPointY(revenue: number): number {
+    if (this.maxRevenue === 0) return 195;
+    const percentage = (revenue / this.maxRevenue) * 100;
+    return 195 - (percentage / 100) * 165;
+  }
+
+  getLinePath(): string {
+    if (!this.revenueTrend || this.revenueTrend.length === 0) return '';
+    return this.revenueTrend
+      .map((item, idx) => `${this.getPointX(idx)},${this.getPointY(item.revenue)}`)
+      .join(' ');
+  }
+
+  getAreaPath(): string {
+    if (!this.revenueTrend || this.revenueTrend.length === 0) return '';
+    const linePoints = this.revenueTrend
+      .map((item, idx) => `${this.getPointX(idx)},${this.getPointY(item.revenue)}`)
+      .join(' ');
+    const lastX = this.getPointX(this.revenueTrend.length - 1);
+    const firstX = this.getPointX(0);
+    return `${firstX},195 ${linePoints} ${lastX},195`;
+  }
+
+  getChartPath(): string {
+    return this.getLinePath();
   }
 
   // Helper method - day name එක format කරන්න
