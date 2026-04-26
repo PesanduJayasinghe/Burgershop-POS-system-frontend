@@ -10,7 +10,8 @@
       </svg>
     </a>
 
-    <a class="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-300">
+    <a class="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-300"
+      [class.bg-gray-300]="isActive('/search')" routerLink="/search">
 
       <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
         stroke="currentColor">
@@ -32,7 +33,8 @@
   </div>
   <div class="flex flex-col items-center mt-2 border-t border-gray-300 ">
 
-    <a class="flex items-center justify-center w-12 h-12 mt-2 hover:bg-gray-300 rounded" routerLink="/stats">
+    <a class="flex items-center justify-center w-12 h-12 mt-2 hover:bg-gray-300 rounded"
+      [class.bg-gray-300]="isActive('/stats')" routerLink="/stats">
       <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
         stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -40,7 +42,8 @@
       </svg>
     </a>
 
-    <a class="relative flex items-center justify-center w-12 h-12 mt-2 hover:bg-gray-300" href="#">
+    <a class="relative flex items-center justify-center w-12 h-12 mt-2 hover:bg-gray-300 rounded"
+      [class.bg-gray-300]="isActive('/notifications')" routerLink="/notifications">
       <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
         stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -51,7 +54,8 @@
 
   </div>
 
-  <a class="flex items-center justify-center w-16 h-16 mt-auto bg-gray-200 hover:bg-gray-300" href="#">
+  <a class="flex items-center justify-center w-16 h-16 mt-auto bg-gray-200 hover:bg-gray-300"
+    [class.bg-gray-300]="isActive('/profile')" routerLink="/profile">
     <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
       stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
