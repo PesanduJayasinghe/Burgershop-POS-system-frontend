@@ -13,10 +13,14 @@ export class BurgersService {
   constructor(private http : HttpClient) { }
 
      getAll(): Observable<Burger[]> {
-      return this.http.get<Burger[]>(this.url);
-    }
-  
-    // getSweets() {
-    //   return this.getAll();
-    // }
+       return this.http.get<Burger[]>(this.url);
+     }
+
+     save(item: Burger): Observable<Burger> {
+       return this.http.post<Burger>(`http://localhost:8080/burgers/save`, item);
+     }
+
+     update(id: number, item: Burger): Observable<Burger> {
+       return this.http.put<Burger>(`http://localhost:8080/burgers/update/${id}`, item);
+     }
 }
