@@ -16,8 +16,11 @@ export class BeveragesService {
     return this.http.get<Beverage[]>(this.url);
   }
 
-  // getSweets() {
-  //   return this.getAll();
-  // }
+  save(item: Beverage): Observable<Beverage> {
+    return this.http.post<Beverage>(`http://localhost:8080/beverages/save`, item);
+  }
 
+  update(id: number, item: Beverage): Observable<Beverage> {
+    return this.http.put<Beverage>(`http://localhost:8080/beverages/update/${id}`, item);
+  }
 }
