@@ -3,4 +3,5 @@ export interface Burger{
     title : string;
     image : string;
     price : string;
+    quantity : number;
 }
