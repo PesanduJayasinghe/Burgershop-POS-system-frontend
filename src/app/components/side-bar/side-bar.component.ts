@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -10,7 +11,7 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class SideBarComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     if (this.router.url === '/') {
@@ -24,6 +25,10 @@ export class SideBarComponent implements OnInit {
 
   isActive(path: string): boolean {
     return this.router.url === path || this.router.url.startsWith(path + '/');
+  }
+
+  isAdmin(): boolean {
+    return this.authService.getCurrentCashier()?.role === 'ADMIN';
   }
 
 }
