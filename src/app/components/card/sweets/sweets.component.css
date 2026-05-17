@@ -4,11 +4,17 @@
 
 .sweets-scroll-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  grid-template-columns: repeat(5, 1fr); /* 5 cards per row */
   gap: 10px;
 }
 
 /* Responsive grid */
+@media (max-width: 1400px) {
+  .sweets-scroll-container {
+    grid-template-columns: repeat(4, 1fr); /* 4 cards on large screens */
+  }
+}
+
 @media (max-width: 1200px) {
   .sweets-scroll-container {
     grid-template-columns: repeat(3, 1fr); /* 3 cards on medium screens */
