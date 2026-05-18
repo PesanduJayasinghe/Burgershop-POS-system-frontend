@@ -60,8 +60,20 @@ export class StatsComponent implements OnInit {
 
     this.statsService.getweeklyRevenue().subscribe({
       next: (data) => {
-        this.revenueTrend = data;
-        this.maxRevenue = Math.max(...data.map(item => item.revenue));
+        if (data && data.length === 1) {
+          const singleItem = data[0];
+          const prevDate = new Date(singleItem.date || new Date());
+          prevDate.setDate(prevDate.getDate() - 1);
+          const dummyItem: RevenueTrend = {
+            day: 'Prev',
+            date: prevDate.toISOString().split('T')[0],
+            revenue: 0
+          };
+          this.revenueTrend = [dummyItem, singleItem];
+        } else {
+          this.revenueTrend = data || [];
+        }
+        this.maxRevenue = Math.max(...this.revenueTrend.map(item => item.revenue), 1);
         this.calculatePercentages();
       }
     });

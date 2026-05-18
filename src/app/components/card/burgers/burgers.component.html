@@ -1,51 +1,117 @@
-<!-- From Uiverse.io by SachinKumar666 --> 
 <div class="page-content">
-   <div class="burgers-scroll-container ">
- @for (burger of burgers; track burger.title) {
-<div class="card">
-  <div class="card__shine"></div>
-  <div class="card__glow"></div>
-  <div class="card__content">
-   
-    <div class="card__badge">NEW</div>
-    <div  class="burger-image"> <img [src]="burger.image" [alt]="burger.title" /></div>
-    <div class="card__text">
-      <p class="card__title">{{ burger.title }}</p>
-    </div>
+  <div class="burgers-scroll-container">
+    @for (burger of burgers; track burger.id) {
+      <div class="card" [class.out-of-stock]="burger.quantity === 0">
+        <div class="card__shine"></div>
+        <div class="card__glow"></div>
+        <div class="card__content">
+          
+          <!-- Admin Edit Pencil -->
+          <button *ngIf="isAdmin()" class="admin-edit-btn" (click)="openEditModal(burger, $event)" title="Edit Item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          </button>
 
-    
-       <!-- Quantity Controls -->
-          <div class="quantity-controls">
-            <button (click)="decreaseQuantity(burger)" [disabled]="burger.quantity === 0">
-              -
-            </button>
-            <span>{{ burger.quantity || 0 }}</span>
-            <button (click)="increaseQuantity(burger)">
-              +
-            </button>
+          <div class="card__badge" *ngIf="burger.quantity > 0">STOCK: {{ burger.quantity }}</div>
+          <div class="card__badge out-of-stock-badge" *ngIf="burger.quantity === 0">OUT OF STOCK</div>
+          
+          <div class="burger-image">
+            <img [src]="burger.image" [alt]="burger.title" />
+          </div>
+          
+          <div class="card__text">
+            <p class="card__title">{{ burger.title }}</p>
           </div>
 
+          <!-- Quantity Controls -->
+          <div class="quantity-controls" *ngIf="burger.quantity > 0">
+            <button (click)="decreaseQuantity(burger)" [disabled]="(burger.orderQuantity || 0) === 0">-</button>
+            <span>{{ burger.orderQuantity || 0 }}</span>
+            <button (click)="increaseQuantity(burger)" [disabled]="(burger.orderQuantity || 0) >= burger.quantity">+</button>
+          </div>
 
-    <div class="card__footer">
-      <div class="card__price">{{ burger.price }}</div>
-
-
-      <button (click)="addToCart(burger)" >
-      <div class="card__button">
-        <svg height="16" width="16" viewBox="0 0 24 24" >
-          <path 
-            stroke-width="2"
-            stroke="currentColor"
-            d="M4 12H20M12 4V20"
-            fill="currentColor"
-          ></path>
-        </svg>
+          <div class="card__footer">
+            <div class="card__price">{{ burger.price }}</div>
+            <button (click)="addToCart(burger)" [disabled]="(burger.orderQuantity || 0) === 0" *ngIf="burger.quantity > 0">
+              <div class="card__button">
+                <svg height="16" width="16" viewBox="0 0 24 24">
+                  <path stroke-width="2" stroke="currentColor" d="M4 12H20M12 4V20" fill="currentColor"></path>
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
       </div>
-      </button>
+    }
+
+    <!-- Add Item Shadow Card -->
+    <div *ngIf="isAdmin()" class="card add-new-card" (click)="openAddModal()" title="Add New Product">
+      <div class="card__content add-new-content">
+        <div class="add-icon-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </div>
+        <p class="add-new-text">Add Item</p>
+      </div>
     </div>
-  
   </div>
-</div>
-}
-</div>
+
+  <!-- Admin Edit Modal Overlay -->
+  <div class="modal-overlay" *ngIf="isEditModalOpen">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Edit Burger</h3>
+        <button class="close-btn" (click)="closeEditModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" [(ngModel)]="editItem.title" placeholder="Enter title" />
+        </div>
+        <div class="form-group">
+          <label>Price (e.g. LKR 1200.00/=)</label>
+          <input type="text" [(ngModel)]="editItem.price" placeholder="Enter price format" />
+        </div>
+        <div class="form-group">
+          <label>Stock Quantity</label>
+          <input type="number" [(ngModel)]="editItem.quantity" placeholder="Enter quantity" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="closeEditModal()">Cancel</button>
+        <button class="btn-primary-modal" (click)="saveEditItem()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Add Modal Overlay -->
+  <div class="modal-overlay" *ngIf="isAddModalOpen">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Add New Burger</h3>
+        <button class="close-btn" (click)="closeAddModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" [(ngModel)]="newItem.title" placeholder="e.g. Bacon Cheese Burger" />
+        </div>
+        <div class="form-group">
+          <label>Price</label>
+          <input type="text" [(ngModel)]="newItem.price" placeholder="e.g. LKR 1250.00/=" />
+        </div>
+        <div class="form-group">
+          <label>Image Name/Path (under img/Burger/)</label>
+          <input type="text" [(ngModel)]="newItem.image" placeholder="e.g. cheesburger.png" />
+        </div>
+        <div class="form-group">
+          <label>Stock Quantity</label>
+          <input type="number" [(ngModel)]="newItem.quantity" placeholder="e.g. 10" />
+        </div>
+        <div class="error-msg" *ngIf="addError">{{ addError }}</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="closeAddModal()">Cancel</button>
+        <button class="btn-primary-modal" (click)="saveNewItem()">Add Product</button>
+      </div>
+    </div>
+  </div>
 </div>

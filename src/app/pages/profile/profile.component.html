@@ -9,17 +9,110 @@
         </div>
 
         <div class="page-content">
-            <div class="profile-card">
-                <h1>Cashier Profile</h1>
+            <div class="profile-container">
+                <!-- User Profile Header Info -->
+                <div class="profile-header-card">
+                    <div class="profile-avatar">
+                        <span>{{ cashier?.name?.charAt(0)?.toUpperCase() || 'U' }}</span>
+                    </div>
+                    <div class="profile-info">
+                        <span class="badge" [class.admin-badge]="isAdmin()">{{ cashier?.role }}</span>
+                        <h1>{{ cashier?.name }}</h1>
+                        <p class="role-desc">Logged in since session began</p>
+                    </div>
+                    <button class="logout-btn" (click)="logout()">Log Out</button>
+                </div>
 
-                @if (cashier) {
-                <p class="label">Current Cashier</p>
-                <p class="name">{{ cashier.name }}</p>
-                } @else {
-                <p class="name">No cashier is logged in.</p>
-                }
+                <!-- Admin Action Panels -->
+                <div class="admin-grid" *ngIf="isAdmin()">
+                    
+                    <!-- 1. Create New Account Form -->
+                    <div class="admin-panel shadow-panel">
+                        <h2>Create New Account</h2>
+                        <p class="panel-subtitle">Register new cashiers or administrators</p>
+                        
+                        <div class="form-container">
+                            <div class="form-group">
+                                <label>Username / Name</label>
+                                <input type="text" [(ngModel)]="newName" placeholder="Enter username" />
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" [(ngModel)]="newPassword" placeholder="Enter password" />
+                            </div>
 
-                <button class="logout-btn" (click)="logout()">Log Out</button>
+                            <div class="form-group">
+                                <label>Access Role</label>
+                                <select [(ngModel)]="newRole">
+                                    <option value="CASHIER">Cashier</option>
+                                    <option value="ADMIN">Administrator</option>
+                                </select>
+                            </div>
+
+                            <div class="error-msg" *ngIf="registerError">{{ registerError }}</div>
+                            <div class="success-msg" *ngIf="registerSuccess">{{ registerSuccess }}</div>
+
+                            <button class="btn-create" (click)="createAccount()">Create Account</button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Manage Current Accounts Table -->
+                    <div class="admin-panel shadow-panel accounts-list-panel">
+                        <h2>Manage System Accounts</h2>
+                        <p class="panel-subtitle">Configure passwords, roles and access privileges</p>
+
+                        <div class="table-wrapper">
+                            <table class="accounts-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th>Password</th>
+                                        <th class="actions-header">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let c of cashiers">
+                                        <td class="user-name-cell">
+                                            <div class="small-avatar">{{ c.name.charAt(0).toUpperCase() }}</div>
+                                            <span>{{ c.name }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="table-badge" [class.badge-admin]="c.role === 'ADMIN'" [class.badge-cashier]="c.role === 'CASHIER'">
+                                                {{ c.role }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="password-field-wrapper">
+                                                <!-- Masked display -->
+                                                <div class="password-toggle-trigger" *ngIf="!isPasswordRevealed(c.id)" (click)="togglePasswordVisibility(c.id)">
+                                                    ••••••••
+                                                    <span class="reveal-hint">(click to edit)</span>
+                                                </div>
+                                                
+                                                <!-- Plaintext edit input when clicked -->
+                                                <div class="password-edit-group" *ngIf="isPasswordRevealed(c.id)">
+                                                    <input type="text" [(ngModel)]="editPasswords[c.id]" class="table-pwd-input" />
+                                                    <button class="btn-table-update" (click)="updateAccount(c)" title="Save Password">Update</button>
+                                                    <button class="btn-table-cancel" (click)="togglePasswordVisibility(c.id)">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="row-actions">
+                                                <button class="btn-row-delete" (click)="deleteAccount(c)" [disabled]="c.id === cashier?.id" title="Delete User">
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>

@@ -8,86 +8,108 @@
 .time-container {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
+    background: #ffffff;
     border-radius: 50px;
-    padding: 0.5rem 1.2rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 1.4rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.time-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -6px rgba(0, 0, 0, 0.05);
+    border-color: #cbd5e1;
 }
 
 .time-icon {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #00eaff, #ff0289);
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 10px;
+    margin-right: 12px;
+    box-shadow: 0 8px 16px rgba(239, 68, 68, 0.2);
 }
 
 .time-icon i {
     color: white;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .time-info {
     display: flex;
     flex-direction: column;
+    gap: 2px;
 }
 
 .current-time {
-    font-size: 16px;
-    font-weight: 600;
-    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
     line-height: 1.2;
+    letter-spacing: -0.3px;
 }
 
 .current-date {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* Mobile time toggle button */
 .mobile-time-toggle {
     display: none;
-    background: rgba(1, 249, 67, 0.572);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    color: white;
+    width: 42px;
+    height: 42px;
+    color: #ef4444;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     align-items: center;
     justify-content: center;
     margin-right: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-time-toggle i {
+    font-size: 18px;
 }
 
 .mobile-time-toggle:hover {
-    background: linear-gradient(135deg, #00ff55b6, #020fff);
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    color: white;
+    box-shadow: 0 8px 16px rgba(239, 68, 68, 0.25);
+    border-color: transparent;
 }
 
 /* Mobile time card */
 .mobile-time-card {
     position: fixed;
-    top: 80px;
+    top: 85px;
     right: 20px;
-    transform: translateY(-100%);
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(10px);
-    border-radius: 50px;
-    padding: 1rem 2rem;
+    transform: translateY(-20px);
+    opacity: 0;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 1rem 1.8rem;
     z-index: 1000;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e2e8f0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
 }
 
 .mobile-time-card.show {
     transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .mobile-time-container {
@@ -98,23 +120,28 @@
 
 .mobile-time-container i {
     font-size: 24px;
-    color: #02ff45;
+    color: #ef4444;
+    filter: drop-shadow(0 4px 8px rgba(239, 68, 68, 0.2));
 }
 
 .mobile-time-info {
     display: flex;
     flex-direction: column;
+    gap: 2px;
 }
 
 .mobile-current-time {
-    font-size: 18px;
-    font-weight: 600;
-    color: white;
+    font-size: 17px;
+    font-weight: 750;
+    color: #0f172a;
 }
 
 .mobile-current-date {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* Mobile responsive */
@@ -134,21 +161,6 @@
         right: 5%;
         padding: 0.8rem 1.5rem;
     }
-    
-    .mobile-current-time {
-        font-size: 16px;
-    }
-    
-    .mobile-current-date {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 400px) {
-    .mobile-time-toggle {
-        width: 35px;
-        height: 35px;
-    }
 }
 
 /* Animation */
@@ -157,7 +169,7 @@
         transform: scale(1);
     }
     50% {
-        transform: scale(1.05);
+        transform: scale(1.08);
     }
     100% {
         transform: scale(1);
@@ -165,5 +177,5 @@
 }
 
 .time-icon i {
-    animation: pulse 2s infinite;
+    animation: pulse 2.5s infinite ease-in-out;
 }

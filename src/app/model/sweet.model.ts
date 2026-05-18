@@ -3,4 +3,5 @@ export interface Sweet{
     title : string;
     image : string;
     price : string;
+    quantity : number;
 }

@@ -42,7 +42,7 @@ export class CartService {
   // In cart.service.ts - update addItem method
   addItem(item: { itemId?: number; name: string; price: number; category?: string; quantity?: number; image?: string }) {
 
-    const quantity = item.quantity || 1; // Default to 1 if not specified
+    const quantity = item.quantity || 1; 
     const validPrice = Number(item.price) || 0;
     const currentItems = this.orderItemsSubject.value;
     const existingItemIndex = currentItems.findIndex(
@@ -57,7 +57,7 @@ export class CartService {
 
       this.orderItemsSubject.next(updatedItems);
     } else {
-      // Add new item
+
       const newItem: CartItem = {
         itemId: item.itemId,
         name: item.name,
@@ -98,13 +98,12 @@ export class CartService {
     this.updateOrderSummary();
   }
 
-  // Clear all items
+
   clearCart() {
     this.orderItemsSubject.next([]);
     this.updateOrderSummary();
   }
 
-  // Calculate order summary
   private updateOrderSummary() {
     const items = this.orderItemsSubject.value;
     const subtotal = items.reduce((sum, item) => sum + item.total, 0);
@@ -120,12 +119,10 @@ export class CartService {
     });
   }
 
-  // Get current items
   getOrderItems(): CartItem[] {
     return this.orderItemsSubject.value;
   }
 
-  // Get current summary
   getOrderSummary(): OrderSummary {
     return this.orderSummarySubject.value;
   }

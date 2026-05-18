@@ -20,4 +20,11 @@ export class SweetsService {
     return this.getAll();
   }
 
+  save(item: Sweet): Observable<Sweet> {
+    return this.http.post<Sweet>(`http://localhost:8080/sweets/save`, item);
+  }
+
+  update(id: number, item: Sweet): Observable<Sweet> {
+    return this.http.put<Sweet>(`http://localhost:8080/sweets/update/${id}`, item);
+  }
 }

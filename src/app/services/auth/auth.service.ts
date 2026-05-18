@@ -19,8 +19,12 @@ export class AuthService {
         );
     }
 
-    signup(name: string, password: string): Observable<Cashier> {
-        return this.http.post<Cashier>(this.signupUrl, { name, password });
+    signup(nameOrPayload: any, password?: string): Observable<Cashier> {
+        if (typeof nameOrPayload === 'string') {
+            return this.http.post<Cashier>(this.signupUrl, { name: nameOrPayload, password, role: 'CASHIER' });
+        } else {
+            return this.http.post<Cashier>(this.signupUrl, nameOrPayload);
+        }
     }
 
     logout(): void {
@@ -34,5 +38,17 @@ export class AuthService {
 
     isLoggedIn(): boolean {
         return this.getCurrentCashier() !== null;
+    }
+
+    getAllCashiers(): Observable<Cashier[]> {
+        return this.http.get<Cashier[]>(`http://localhost:8080/cashiers`);
+    }
+
+    updateCashier(id: number, cashier: Cashier): Observable<Cashier> {
+        return this.http.put<Cashier>(`http://localhost:8080/cashiers/${id}`, cashier);
+    }
+
+    deleteCashier(id: number): Observable<void> {
+        return this.http.delete<void>(`http://localhost:8080/cashiers/${id}`);
     }
 }

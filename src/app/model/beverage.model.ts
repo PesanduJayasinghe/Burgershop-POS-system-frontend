@@ -3,4 +3,5 @@ export interface Beverage{
     title : string;
     image : string;
     price : string;
+    quantity : number;
 }
